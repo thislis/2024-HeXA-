@@ -62,7 +62,7 @@ def PlzNoMoreKeyTerm(pdf, bertseting):
 
     return {"result":result, "Not_founded":fail}
 
-min, max = map(int, input("min/max word count(integer, integer): ").split(", "))
+min, max = map(int, input("min/max word count(smaller integer, larger integer): ").split(", "))
 if input("Maximal Marginal Relevance on/off: ") == "on":
     MMR = True
 else: MMR = False
@@ -72,7 +72,7 @@ else: MSD = False
 BERTSETTING = {"minwordcnt":min, "maxwordcnt":max, "mmr":MMR, "msd":MSD}
 
 pdf_path = input("Pdf path: ")
-start, end = map(int, input("start page, end page(integer, integer): ").split(", "))
+start, end = map(int, input("start page, end page(smaller integer, larger integer): ").split(", "))
 PDF = {"pdf_path":pdf_path, "start_page":start, "end_page":end}
 
 
