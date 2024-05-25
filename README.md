@@ -19,4 +19,4 @@ KeyBERT를 이용하여 키워드를 추출하고, 이를 위키피디아에 검
    *KeyBERT 설정 등은 다음 자료 참조: https://github.com/MaartenGr/KeyBERT
 
 3. PlzNoMoreKeyTerm(PDF, BERTSETTING)
-   pdf 파일 관련 dictionary PDF와 KeyBERT 세팅값 dictionary BERTSETTING을 받아 PDF에서 키워드를 추출 및 위키피디아에서 검색하여 검색 결과 list와 검색에 실패한 단어 list를 dictionary로 반환합니다.
+   pdf 파일 관련 dictionary PDF와 KeyBERT 세팅값 dictionary BERTSETTING을 받아 PDF에서 키워드를 추출 및 위키피디아에서 검색하여 검색 결과 dictionary와 검색에 실패한 단어 list를 dictionary로 반환합니다.
