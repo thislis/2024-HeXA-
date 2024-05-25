@@ -36,6 +36,32 @@ def ext_keyword(text_list, setting):
 
     return keyword_list
 
+def PlzNoMoreKeyTerm(pdf, bertseting):
+
+    words = []
+
+    for i in ext_keyword(pdf2txt(pdf["pdf_path"], pdf["start_page"], pdf["end_page"]), bertseting):
+        for j in i:
+            words.append(j[0])
+
+    result = {}
+    fail = []
+
+    for word in words:
+        word = re.sub("[0-9]", "", word)
+        if bool(word):
+            page = wiki.page(word)
+            if page.exists():
+                r = re.sub(" {3,}", "", re.sub("\n", "", page.summary))
+                if "refer to" in r:
+                    result[word] = r + f"({page.fullurl})"
+                else:
+                    result[word] = r
+            else:
+                fail.append(word)
+
+    return {"result":result, "Not_founded":fail}
+
 min, max = map(int, input("min/max word count(integer, integer): ").split(", "))
 if input("Maximal Marginal Relevance on/off: ") == "on":
     MMR = True
@@ -43,34 +69,16 @@ else: MMR = False
 if input("Max Sum Distance on/off: ") == "on":
     MSD = True
 else: MSD = False
-set_dict = {"minwordcnt":min, "maxwordcnt":max, "mmr":MMR, "msd":MSD}
+BERTSETTING = {"minwordcnt":min, "maxwordcnt":max, "mmr":MMR, "msd":MSD}
 
 pdf_path = input("Pdf path: ")
 start, end = map(int, input("start page, end page(integer, integer): ").split(", "))
-
-words = []
-
-for i in ext_keyword(pdf2txt(pdf_path, start, end), set_dict):
-    for j in i:
-        words.append(j[0])
-
-result = {}
-fail = []
-
-for word in words:
-    word = re.sub("[0-9]", "", word)
-    if bool(word):
-        page = wiki.page(word)
-        if page.exists():
-            r = re.sub(" {3,}", "", re.sub("\n", "", page.summary))
-            if "refer to" in r:
-                result[word] = r + f"({page.fullurl})"
-            else:
-                result[word] = r
-        else:
-            fail.append(word)
+PDF = {"pdf_path":pdf_path, "start_page":start, "end_page":end}
 
 
-pprint.pprint(result)
+
+gg = PlzNoMoreKeyTerm(PDF, BERTSETTING)
+
+pprint.pprint(gg["result"])
 print("Not founded")
-print(fail)
+print(gg["Not_founded"])
